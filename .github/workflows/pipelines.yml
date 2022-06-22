@@ -29,20 +29,18 @@ jobs:
           if-no-files-found: error
           retention-days: 1
       
-      
+  download_artifacts:
+    name: Download Artifacts
+    runs-on: ubuntu-latest
 
-#   download_artifacts:
-#     name: Download Artifacts
-#     runs-on: ubuntu-latest
+    steps:
+      - name: Download iac artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: iac_artifacts
 
-#     steps:
-#       - name: Download iac artifacts
-#         uses: actions/download-artifact@v3
-#         with:
-#           name: iac_artifacts
-
-#       - name: Display downloaded artifacts
-#         run: ls -R
+      - name: Display downloaded artifacts
+        run: ls -R
 # # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 # jobs:
 #   # This workflow contains a single job called "build"

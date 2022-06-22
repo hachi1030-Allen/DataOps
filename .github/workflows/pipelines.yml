@@ -42,6 +42,10 @@ jobs:
     name: Deploy Dev Environment
     needs: publish_artifacts
 
+    env:
+      ResourceGroupName: "ABI-Databricks-Dev"
+      ResourceGroupLocation: "northeurope"
+
     steps:
       - name: Download iac files
         uses: actions/download-artifact@v3
@@ -57,10 +61,17 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - uses: Azure/CLI@v1
+        with:
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
+            echo "Azure resource group created"
+
       - name: Deploy ARM resources
         uses: azure/arm-deploy@v1
         with:
-          resourceGroupName: "ABI-Databricks-Dev"
+          resourceGroupName: ${{ env.ResourceGroupName }}
           template: iac/databricks.json
 
   # download_artifacts:

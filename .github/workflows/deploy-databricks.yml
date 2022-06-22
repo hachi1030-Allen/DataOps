@@ -15,6 +15,8 @@ on:
     secrets:
       pat:
         required: true
+      azure_credentials:
+        required: true
 
 jobs:
   deploy:
@@ -35,7 +37,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.azure_credentials }}
 
       - name: Create resource group if not exists
         uses: Azure/CLI@v1
@@ -66,7 +68,7 @@ jobs:
           # Databricks host
           databricks-host: ${{ inputs.databricks-host }}
           # Databricks token
-          databricks-token: ${{ secrets.DATABRICKS_PAT }}
+          databricks-token: ${{ secrets.pat }}
           # LOCAL_NOTEBOOKS_PATH
           local-path: src/
           # REMOTE_NOTEBOOK_PATH

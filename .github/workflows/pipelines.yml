@@ -47,3 +47,4 @@ jobs:
       databricks-host: "https://adb-6242632037685839.19.azuredatabricks.net"
     secrets:
       pat: ${{ secrets.DATABRICKS_PAT }}
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

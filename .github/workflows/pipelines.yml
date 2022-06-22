@@ -29,6 +29,14 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Upload src artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: src_artifacts
+          path: databricks/src/
+          if-no-files-found: error
+          retention-days: 1
+
   download_artifacts:
     name: Download Artifacts
     runs-on: ubuntu-latest

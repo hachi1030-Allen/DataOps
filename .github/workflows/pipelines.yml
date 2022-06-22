@@ -50,7 +50,7 @@ jobs:
           path: iac/
 
       - name: Display downloaded artifacts
-        run: ls R
+        run: ls -R
 
       - name: Login to Azure
         uses: azure/login@v1

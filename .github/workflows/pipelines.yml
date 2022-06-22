@@ -53,9 +53,6 @@ jobs:
           name: iac_artifacts
           path: iac/
 
-      - name: Display downloaded artifacts
-        run: ls -R
-
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -76,6 +73,12 @@ jobs:
           
       - name: install-databricks-cli
         uses: microsoft/install-databricks-cli@v1.0.0
+        
+      - name: Download src files
+        uses: actions/download-artifact@v3
+        with:
+          name: src_artifacts
+          path: src/
         
       - name: databricks-import-directory
         uses: microsoft/databricks-import-notebook@v1.0.0

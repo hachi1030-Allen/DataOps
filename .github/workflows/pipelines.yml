@@ -48,3 +48,27 @@ jobs:
     secrets:
       pat: ${{ secrets.DATABRICKS_PAT }}
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy-qa:
+    name: Deploy QA Environment
+    needs: deploy-dev
+    uses: ./.github/workflows/deploy-databricks.yml
+    with:
+      env_name: qa
+      resource_group_location: northeurope
+      databricks-host: ""
+    secrets:
+      pat: ${{ secrets.DATABRICKS_PAT }}
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy-prod:
+    name: Deploy Production Environment
+    needs: deploy-qa
+    uses: ./.github/workflows/deploy-databricks.yml
+    with:
+      env_name: production
+      resource_group_location: northeurope
+      databricks-host: ""
+    secrets:
+      pat: ${{ secrets.DATABRICKS_PAT }}
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

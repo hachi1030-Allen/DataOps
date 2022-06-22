@@ -39,6 +39,7 @@ jobs:
 
   deploy-dev:
     name: Deploy Dev Environment
+    needs: publish_artifacts
     uses: ./.github/workflows/deploy-databricks.yml
     with:
       env_name: dev

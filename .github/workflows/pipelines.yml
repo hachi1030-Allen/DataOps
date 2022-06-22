@@ -41,6 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy Dev Environment
     needs: publish_artifacts
+    environment: abi-databricks-dev
 
     env:
       ResourceGroupName: "ABI-Databricks-Dev"
@@ -84,9 +85,9 @@ jobs:
         uses: microsoft/databricks-import-notebook@v1.0.0
         with:
           # Databricks host
-          databricks-host: ""
+          databricks-host: "https://adb-6242632037685839.19.azuredatabricks.net"
           # Databricks token
-          databricks-token: ""
+          databricks-token: ${{ secrets.DEV_DATABRICKS_PAT }}
           # LOCAL_NOTEBOOKS_PATH
           local-path: src/
           # REMOTE_NOTEBOOK_PATH

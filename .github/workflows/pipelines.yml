@@ -39,7 +39,7 @@ jobs:
 
   deploy-dev:
     name: Deploy Dev Environment
-    uses: ./.github/workflows/deploy-databricks.yml@main
+    uses: ./.github/workflows/deploy-databricks.yml
     with:
       env_name: dev
       resource_group_location: northeurope

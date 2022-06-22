@@ -23,7 +23,7 @@ jobs:
 
     env:
       ResourceGroupName: "ABI-Databricks-${{ inputs.env_name }}"
-      ResourceGroupLocation: ${{ resource_group_location }}
+      ResourceGroupLocation: ${{ inputs.resource_group_location }}
 
     steps:
       - name: Download iac files

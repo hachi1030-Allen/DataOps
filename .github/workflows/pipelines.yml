@@ -25,20 +25,20 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: iac_artifacts
-          path: ${{ github.workspace }}/databricks/iac/
+          path: databricks/iac/
           if-no-files-found: error
           retention-days: 1
 
   download_artifacts:
     name: Download Artifacts
     runs-on: ubuntu-latest
+    needs: publish_artifacts
 
     steps:
       - name: Download iac artifacts
         uses: actions/download-artifact@v3
         with:
           name: iac_artifacts
-          path: ${{ github.workspace }}/databricks/iac/
 
       - name: Display downloaded artifacts
         run: ls -R

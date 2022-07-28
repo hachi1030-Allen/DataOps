@@ -1,4 +1,4 @@
-name: Deploy Databricks
+name: Deploy Databricks Notebook Job
 
 on:
   workflow_call:
@@ -6,13 +6,9 @@ on:
       env_name:
         required: true
         type: string
-      resource_group_location:
-        required: true
-        type: string
-      databricks-host:
-        required: true
-        type: string
     secrets:
+      host:
+        required: true
       pat:
         required: true
       azure_credentials:
@@ -23,36 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: "abi-databricks-${{ inputs.env_name }}"
 
-    env:
-      ResourceGroupName: "ABI-Databricks-${{ inputs.env_name }}"
-      ResourceGroupLocation: ${{ inputs.resource_group_location }}
-
     steps:
-      - name: Download iac files
-        uses: actions/download-artifact@v3
-        with:
-          name: iac_artifacts
-          path: iac/
-
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.azure_credentials }}
-
-      - name: Create resource group if not exists
-        uses: Azure/CLI@v1
-        with:
-          inlineScript: |
-            #!/bin/bash
-            az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
-            echo "Azure resource group created"
-
-      - name: Deploy ARM resources
-        uses: azure/arm-deploy@v1
-        with:
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          template: iac/databricks.json
-
       - name: install-databricks-cli
         uses: microsoft/install-databricks-cli@v1.0.0
 

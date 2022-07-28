@@ -1,6 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-
-name: CI
+name: Deploy Databricks
 
 # Controls when the workflow will run
 on:
@@ -8,7 +7,9 @@ on:
   push:
     branches: ["dev"]
   pull_request:
-    branches: ["dev"]
+    branches:
+      - dev
+      - "releases/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,14 +21,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Upload iac artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: iac_artifacts
-          path: databricks/iac/
-          if-no-files-found: error
-          retention-days: 1
 
       - name: Upload src artifacts
         uses: actions/upload-artifact@v3
@@ -43,9 +36,8 @@ jobs:
     uses: ./.github/workflows/deploy-databricks.yml
     with:
       env_name: dev
-      resource_group_location: northeurope
-      databricks-host: "https://adb-6242632037685839.19.azuredatabricks.net"
     secrets:
+      host: ${{ secrets.DATABRICKS_HOST }}
       pat: ${{ secrets.DATABRICKS_PAT }}
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -55,9 +47,8 @@ jobs:
     uses: ./.github/workflows/deploy-databricks.yml
     with:
       env_name: qa
-      resource_group_location: northeurope
-      databricks-host: "https://adb-8049117000605825.5.azuredatabricks.net"
     secrets:
+      host: ${{ secrets.DATABRICKS_HOST }}
       pat: ${{ secrets.DATABRICKS_PAT }}
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -67,8 +58,7 @@ jobs:
     uses: ./.github/workflows/deploy-databricks.yml
     with:
       env_name: production
-      resource_group_location: northeurope
-      databricks-host: "https://adb-1026900206524696.16.azuredatabricks.net"
     secrets:
+      host: ${{ secrets.DATABRICKS_HOST }}
       pat: ${{ secrets.DATABRICKS_PAT }}
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

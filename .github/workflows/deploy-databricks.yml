@@ -33,7 +33,7 @@ jobs:
         uses: microsoft/databricks-import-notebook@v1.0.0
         with:
           # Databricks host
-          databricks-host: ${{ inputs.databricks-host }}
+          databricks-host: ${{ secrets.host }}
           # Databricks token
           databricks-token: ${{ secrets.pat }}
           # LOCAL_NOTEBOOKS_PATH

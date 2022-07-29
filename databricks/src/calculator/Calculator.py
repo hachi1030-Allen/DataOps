@@ -35,7 +35,7 @@ class Calculator:
 		if x == None: x = self.x
 		if y == None: y = self.y			
           
-		return x*y*2
+		return x*y
 
 	def divide(self, x = None, y = None):
 		if x == None: x = self.x
